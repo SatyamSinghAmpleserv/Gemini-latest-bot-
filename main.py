@@ -558,6 +558,13 @@ Your job is to:
 
 Return ONLY valid JSON.
 
+Rules:
+- Do NOT wrap the response in markdown.
+- Do NOT use ```json or ``` fences.
+- Do NOT include explanations.
+- Do NOT include any text before or after the JSON.
+- The response must be parseable by json.loads().
+
 Output format:
 
 {{
@@ -605,13 +612,14 @@ Only return the JSON. Do not include explanations.
         )
         # print(messages)
         print("-"*100)
-        print(response)
+        print(response.content[0]['text'])
         print("-"*100)
         result = json.loads(response.content[0]['text'])
         # print(response)
         # return {
         #     "messages": [response]
         # }
+        print(result)
         print("RETURNING STATE:")
         print({
             "SQL": result["SQL"],

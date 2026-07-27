@@ -1,0 +1,506 @@
+{
+    "table_schema":[
+    {
+    "table_name":"m_vehicle",
+    "type":"master",
+    "description":"It is a master vehicle details containing details of vehicles in general which are not running or not in ongoing shipment order delivery. The table has some information about vehicles category 'Truck' or 'Trailer', it's status about 'Available', 'Reserved', 'Allocated', 'Dispatched', 'En Route - Outward', 'En Route - Inward', 'Returned', 'Inspection Due', 'Maintenance', 'Breakdown', 'On Hold', 'Inactive', vehicles owner code, vehicles owner names, vehicles's manufacturer names, vehicle's manufacturer year,vehicles odo meter reading, max odo reading, vehicle's weight, vehicles volume, it's dimension, vehicle's axle configration, vehicles registration number, it's registration detail, vehicles warranty year etc."
+},
+
+{
+    "table_name":"d_fm_shipmentorder",
+    "type":"master",
+    "description":"It is a master shipment order table which contains all details of shipment orders or trips. Use this table to check operational shipment order details which are open, closed, cancelled or the planning date of the shipments, shipment type local shipmet orders or local trip, in-transit shipment orders or in-transit trip. This table also has the information about all shipment orders completed in past years. It contain document number, customet name and ID, it's planning date, load dates, offload dates, destination offload dates, quantity, order amount, expenses amount, extra charges, file numbers, it's assigned trip number, total quantity etc."
+},
+{
+    "table_name":"d_fm_shipmentorder_vehicledetails",
+    "type":"child",
+    "description":"It is a table which contains details of vehicles used in completing shipment orders or trips. This table has record of all completed orders or trips done by each vehicles mentioning all details of the trips or shipment. This table does not contain ongoing shipment order details. It has the shipment details that has been completed. For completed shipments or trips, it keeps records of vehicles number, attched trailers, drvier names, vehicles owner name, currency, trip ticket, checkin date, allocation date. To find the completed shipment order or trips done by different vehicles use this table."
+},
+{
+    "table_name":"d_fm_vehicle_movement",
+    "type":"child",
+    "description":"This table contains details of vehicles ongoing for shipments. This table has record for vehicles which are currently in process to complete the shipment orders. It contains the vehicles that is being used for running or ongoing shipment order which help us to find out the trucks which are in process attahced trailer details, the route that is being followed, locations of the vehicles arrived at border1 or at border 2 or destination point or offloading destination, returning, containers that is being shipped, arrival date at different locations etc."
+},
+{
+  "table_name": "m_manufacture",
+  "type": "master",
+  "description": "Manufacturer master data table. Use this table as a central registry to manage, validate, and track production brands and manufacturing companies that supply fleet components, parts, or tyres. It contains corporate profile attributes, primary corporate contact communication channels, geographic origin references, and operational state flags. Use this table for user queries concerning company brand validations, extracting manufacturer profile contact records, auditing supplier listings, or analyzing tracking histories of master business entities across asset provisioning systems."
+},
+{
+    "table_name":"d_fm_shipmentorder_billingcharges",
+    "type":"child",
+    "description":"This table contains additional details about charges of billings associated for our customers. It contains the charges paid for billing on behalf of customers. The table mentions the billing charge names, sub file number, charge dates, the quantity, it's amount, customer codes, customer name, document type or bill type, document number, tax amount, billing approval, billing approval remarks,  quantity in shift1 or shift2, shift timings, shift 1 timing, shift 2 timing etc."
+},
+{
+    "table_name":"d_fm_shipmentorder_expenses",
+    "type":"child",
+    "description":"Expense table. This table contains details about trip expenses associated with each shipment orders or **trips**. It keeps record of trip expenses cost in completing the shipment orders or **trips**. The table contains the details about trip expense names, container number, sub file number, funds from account, border, expense date, quantity, price, exchange rate, total amount, original total amount, paid amount, due amount, supllier code, supllier name, document type, document number etc."
+},
+{
+    "table_name":"d_fm_shipmentorder_cargodetails",
+    "type":"child",
+    "description":"Cargo detail,  billing information, **POD**, proof of delivery information table. Use this table to handle queries related to: container or cargo, **billing information, billing details, billing approval** details, **billed** trips, **billed** shipment order. It keeps detail of Customer ,container, container size ,weight ,POD verification, POD (Proof of delivery) date, proof of delivery, waiting POD, POD pending, POD attachment, currency, amount,approval,file number ,subfileno etc. It also contains information of billing informations, billing details of shipment order. Trips that are billed. Shipment order whose bill is generated. Trips whose billing is approved. Approved bill trips. Pending POD trips. Trips for which POD is attached. Trips whose proof of delivery is generated. Shipment order waiting for POD. Trips whose POD is verified."
+},
+{
+    "table_name":"aiva_shipment_total_revenue_invoice",
+    "type":"child",
+    "description":"Revenue, Invoice generation details table of shipment order or trips. Use this table for any revenue and invoice related concern of trips or shipment order. This table contains detail about **revenue**, **invoice informations**. Use this table for **Invoice** and **revenue** queries. Use this table for **pending invoice**, **not yet invoiced**, **invoice creation**, **pending revenue**, **generated invoice**, paid revenue, **revenue amount**, payment status etc."
+},
+{
+    "table_name":"aiva_shipment_order_route_data",
+    "type":"child",
+    "description":"Route information, trip delay table. This table contains route name, route id, offloading date ,actual loading date ,trip days taken,days define in route or estimated trip days,also get information if shipment get delay. Use this table for route, trip delays, trips days queries."
+},
+{
+    "table_name":"m_currencies",
+    "type":"child",
+    "description":"Currency table. Use this table for filtering expense, cost currency in USD, TZS, EUR, GBP etc. This table contains currency code (USD, TZS, EUR, GBP), currency name etc. Currency code represents the trip or shipment order expenses currency like EUR for euro, GBP for british pound, TZS or Tanzanian shillings, USD or us dollars (id=4) and for ZAR or African Rand (id=5). Currencies are listed as dollars, Tanzanian shillings, british pound, euros etc. Check the user query, if mentioning currency (dollars, shilling, euro etc) in the query select this table. Trips whose expenses are more than 10000 dollars. Shipment orders that cost less than 10000 shilling. Trips for which total expenditure is exceeding 50000 USD."
+}
+,
+{
+  "table_name": "m_item",
+  "type": "master",
+  "description": "Item master data table. Use this table as the central registry to manage, validate, and track all physical assets, spare parts, and specialized fleet consumables such as tyres within the ecosystem. It contains key flags for inventory, sales, and purchasing classifications, alongside transactional metrics like stock on hand, average prices, and valuation configurations. Additionally, it contains extensive specialized attributes for tracking operational tyre configurations (tread depths, mileage projections, sizes, models), lifecycle rules, and warranties. Use this table for user queries concerning item definitions, tracking available warehouse stock balances, verifying spare part lifecycles, or auditing technical tyre specifications and warranties."
+},
+{
+  "table_name": "m_vehicle_allocation_planning",
+  "type": "master",
+  "description": "Vehicle allocation planning table. Use this table for tracking, scheduling, and assigning assets (trucks, trailers, drivers) to shipments, customers, or cargo files. Key columns include operational entities like [truck_name], [driver_name], [driver_phone], [driver_license_id], [customer_name], and multiple trailer slots ([trailer_name], [trailer_name_2], [trailer_name_3], [trailer_name_4]). It handles logistics metrics such as [cargo] details, [quantity], [weight], [total_weight], [container_no], [container_size], and [subfile_no]. For temporal analytics or scheduling, filter by date columns like [planned_allocation_date], [allocation_date], [next_load_date], or [expected_load_date]. This table is essential for answering queries regarding vehicle assignments, logistics schedule changes, driver details assigned to specific cargo/customers, and truck asset utilization planning."
+},
+{
+  "table_name": "d_fm_returnloadorder",
+  "type": "child",
+  "description": "Back load or return load order scheduling table. Use this table to manage and track secondary cargo shipments booked for vehicles returning from their primary destinations. Key operational columns include [loading_site], [container_no], [container_size], [sub_tripno], and [commodity]. Customer tracking is managed through [card_code], [card_name], and [customer_id], while routing logistics rely on [route_code] and [route_id]. Dates for scheduling are tracked via [available_date], [confirmed_date], and [expetected_load_date]. Financial metrics include [quantity], [price], and [order_amount]. Use this table for user queries regarding backload tracking, finding cargo availability for return trips, matching return routes, checking confirmation statuses ([is_confirmed]), and estimating revenue generated from return legs."
+},
+{
+  "table_name": "d_fm_fuellog_book",
+  "type": "master",
+  "description": "Fuel log book table. Use this table to track fuel consumption, odometer metrics, fuel allocation quantities, and associated trip pricing for fleet assets. Key operational columns include [vehicle_code], [vehicle_name], [driver_name], [route_code], and [warehouse_name] (dispensing warehouse). It manages complex distance-to-fuel metrics via [current_odometer], [previous_odometer], [total_km_travelled], [fuel_avg_withload], [fuel_avg_withempty], [balance_fuel], and [balance_km]. Financial and audit metrics are captured through [quantity] (total fuel quantity), [unit_price], [total_amount], and specific entity breakdowns like [driver_quantity], [fuel_contoller_quantity], and [company_quantity]. Filter entries by dates using [issue_date] or [requested_date]. Use this table for user queries concerning fuel expenses, vehicle efficiency or average kilometers/mileage, fuel auditing, tracking fuel quantities issued, or investigating active vs cancelled/rejected logs via [is_cancelled], [approved], and [is_reject]."
+},
+{
+  "table_name": "d_fm_fuellog_book_attachment",
+  "type": "child",
+  "description": "Fuel log book attachments table. Use this table to manage and retrieve media files, receipts, invoices, or document templates uploaded in support of a fuel log entry. Key metadata columns include [file_name], [file_extension], [mime_type], and [cdn_url] for file hosting references, alongside the raw file binary storage in [template]. It links back to the parent fuel log through [parent_id] and tracks audit metrics such as the corresponding supplier invoice reference via [supplier_inv], the target uploader via [user_id], and chronological logging via [attachment_date]. Use this table for user queries regarding missing or verified fuel receipts, pulling up scanned supplier invoice attachments, or validating fuel records with proof of purchase documents."
+},
+{
+  "table_name": "d_cf_loading_confirmation",
+  "type": "child",
+  "description": "Shipment order loading confirmation table based on files. Use this table to track and verify the loading events of physical transport assets against primary cargo files. Key operational columns include asset identifiers like [truck_no], [trailer_no], [driver_name], [driver_contact_no], and cargo references such as [file_no], [sub_file_no], [container_no], and [custom_seal] mappings. Chronological monitoring is handled via operational dates like [loading_date], [Truck_leaving_date], and [discharge_date]. Flag status indicators include [loading] and [departure_confirmed]. Use this table for user queries regarding loading process updates, confirming if a truck has left the dispatch yard, validating custom seals assigned to specific container files, or auditing transport team execution timelines."
+},
+{
+  "table_name": "m_driver",
+  "type": "master",
+  "description": "Driver master details table. Use this table to manage and track profile data for company drivers, their assistants, and primary vehicle pairings. Key operational columns include identifying attributes like [driverid], [driver_name], [driver_type], and [branch], alongside communication data such as [driver_phone1] and [driver_phone2]. It captures driver support staff via [turn_boy_id] and [turn_boy_name], and handles vehicle asset assignments via [default_vehicle] and [default_vehicle_code]. Driver availability or employment standing can be tracked through [status], [status_remarks], and [status_date]. Use this table for user queries regarding driver directories, tracking active or inactive drivers, verifying assigned assistant details, pulling contact numbers, or validating default truck driver configurations."
+},
+{
+  "table_name": "m_driver_license",
+  "type": "child",
+  "description": "Driver license details child table. Use this table to manage, audit, and track the legal driving credentials and certification history of drivers. It links directly back to the driver master record via [parent_id]. Key credential columns include [license_number], [license_type] (e.g., heavy commercial vehicle classes), [issuing_agency], and [country] of authorization. Compliance and validity boundaries are managed through [effective_date] and [expired_date]. Use this table for user queries concerning regulatory compliance reviews, locating upcoming driver license expirations, checking if a driver possesses the correct license type for a cargo assignment, or extracting document serial numbers."
+},
+{
+  "table_name": "m_driver_vehicle",
+  "type": "child",
+  "description": "Driver vehicle history child table. Use this table to track historical or multi-vehicle pairings linked to specific drivers over time. It establishes a child relationship to the driver master record via [parent_id]. Key asset columns include the mapped vehicle code or reference [vehId] and the textual vehicle descriptor [vehName]. System transaction validity ranges are maintained across [ValidFrom] and [ValidTo]. Use this table for user queries reconstructing driver-fleet operational history, auditing which trucks a specific driver has been authorized to operate, or mapping cross-references between driver IDs and vehicle asset keys."
+},
+{
+  "table_name": "m_driver_attachment",
+  "type": "child",
+  "description": "Driver profile attachments child table. Use this table to manage and retrieve media files, passport photos, identification documents, or medical certs uploaded for a specific driver. It links back to the driver master table via [parent_id]. Key storage and metadata columns include [file_name], [file_extension], [mime_type], [cdn_url] for external hosting links, and the raw binary document blob in [template]. Operational audit fields include the uploader's name [user_name], creation timeline via [attachment_date], and [is_mobile] to indicate if the document was uploaded via a mobile application. Use this table for user queries regarding missing driver paperwork, retrieving scanned driver profile images, or auditing driver compliance files."
+},
+{
+  "table_name": "m_turnboy",
+  "type": "master",
+  "description": "Turn boy (driver assistant) master profiles table. Use this table to manage identity information and operational records for logistics assistants assigned to aid drivers on transit trips. Key columns include identification details like [name], [passport], [id_no], [id_type], and contact data such as [Phone1] and [Phone2]. It handles structural relationships to fleet staff via [associated_driver_id], [associated_driver_name], and [relationwith_driver]. Use this table for user queries regarding driver assistant rosters, validating contact details or legal identity documents for assistants, checking employment status via [is_active], or mapping assistants back to their primary drivers."
+},
+{
+  "table_name": "m_turnboy_attachment",
+  "type": "child",
+  "description": "Turn boy profile attachments child table. Use this table to manage and retrieve digital media assets, passport copies, identification documents, or medical certificates uploaded for a turn boy (driver assistant). It links directly back to the turn boy master table via [parent_id]. Key storage and metadata columns include [file_name], [file_extension], [mime_type], [cdn_url] for external hosting references, and raw binary file blobs in [template]. Temporal metrics are recorded using [attachment_date]. Use this table for user queries concerning document verification for driver assistants, auditing missing paperwork, or pulling digital file links for background checks."
+},
+{
+  "table_name": "d_fm_documenthandling",
+  "type": "child",
+  "description": "Document handling and trip settlement table. Use this table to track document processing parameters, load-to-delivery quantity reconciliation, allowances, and trip expense summaries for both outbound (going/g_) and return (r_) shipment legs. Key operational columns include [driver_name], [truck_no], [route], and shipment orders like [g_shipment_order] and [r_shipment_order]. It processes logistics quantities such as loading, delivery, tolerance, and shortage volumes (e.g., [g_load_qty], [r_del_qty], [g_short_qty]). Financial reconciliations are managed through legs rates, allowances, and offsets like [g_amount], [r_amount], [recovery_fuel], [bonus], [overstay_allowance], and [total_amount]. Use this table for user queries regarding trip document verification, auditing loading vs. offloading shortages, calculating final driver trip payments ([employee_payment_no]), or checking trip approval states via [status] and [approval]."
+},
+{
+  "table_name": "d_fm_documenthandling_details",
+  "type": "child",
+  "description": "Document handling fine-grained metrics child table. Use this table to manage and break down specific line-item metrics, tolerances, performance metrics, and adjustments for a parent trip document settlement. It links directly back to the document handling summary record via [parent_id]. Key transactional columns include metric codes [code], and operational quantities like [allowed], [actual], and [missed]. Financial adjustments and computations are handled via [rate], [bonus], [rate_deduction], [deduction], and line-item [total_amount]. Operational audit flags include [controller_1] and [controller_2] approvals. Use this table for user queries regarding granular trip deductions, looking up exact breakdown reasons for shortage penalties, or reviewing auditor/controller flag states on a trip settlement."
+},
+{
+  "table_name": "d_dm_driver_evaluation",
+  "type": "child",
+  "description": "Driver performance evaluation and bonus calculation table. Use this table to track driver performance scores, trip metrics, and associated financial adjustments or allowances linked to specific consignments. Key operational columns include [driver_name], [truck], [trailer1], [trailer2], and consignment identifiers like [consignment_no] and [return_consignment_no]. It handles trip evaluation metrics such as [total_points], [kms] travelled, [weight_in_tons], and [from_location]. Financial performance calculations include values like [rate_per_ton], [rate_per_point], [smartbonus], [bonus_total], [overstay_allowances], and various fuel deductions (e.g., [recovery_fuel], [driver_iou_fuel]). Use this table for user queries concerning driver KPI evaluation histories, performance bonus payouts, fuel recovery audits per trip, and processing system payment links via [payment_entry]."
+},
+{
+  "table_name": "d_dm_driver_trip_kpi",
+  "type": "child",
+  "description": "Driver trip key performance indicators (KPI) table. Use this table to track operational trip performance scores, route analytics, and point-based metrics used for driver appraisals. Key operational columns include [driver_name], [truck_no], [trailer_no], [route_code], and [route_id], alongside shipment references like [ship_id] (forward) and [return_ship_id] (return leg). Performance evaluations are quantified via [max_points] and [actual_points], supplemented by [feed_back] status flags. Financial metrics associated with performance metrics include [Rate], [sub_total], and [bonus], calculated alongside physical distance tracked via [total_kms]. Use this table for user queries concerning driver trip efficiency, tracking total KPI points earned per route, running monthly performance scorecards, or evaluating trip-based bonus allocations."
+},
+{
+  "table_name": "d_dm_driver_trip_kpi_detail",
+  "type": "child",
+  "description": "Driver trip key performance indicators (KPI) granular breakdown table. Use this table to track individual scoring line items, performance categories, and specific rule validations evaluating a driver's behavior or efficiency for a single trip record. It establishes a child relationship to the trip summary via [parent_id]. Key analytical attributes include categorization fields like [kpi_group_id], [kpi_type_id], and the explicit criteria descriptor [kpi_name]. Individual item performance metrics are quantified via line-level [max_points] and [actual_points] targets. Use this table for user queries concerning itemized driver score assessments, identifying exact performance failure areas (e.g., safety, fuel efficiency, punctuality details), or auditing granular score breakdowns behind a driver's trip appraisal."
+},
+{
+  "table_name": "d_tm_tyremaster",
+  "type": "master",
+  "description": "Tyre asset management master table. Use this table to manage individual tyre lifecycles, specifications, tracking metrics, procurement history, and performance evaluations. Key inventory and physical columns include serialization references like [brand_no], [part_serial_no], [manf_serial_no], [company_brand_no], alongside attributes like [tire_model], [tire_size], [ply_rating], and item identifiers ([part_code], [part_name]). It manages physical degradation metrics via tread depths ([original_tread_depth], [current_tread_depth], [minimum_tread_depth], [remaining_td]) and tracks lifecycle spans via [used_life], [remaing_life], [km_ob], and [projected_km]. Financial metrics include asset value metrics like [item_cost], [remaining_cost], and cost-per-kilometer evaluations ([expected_cpk], [actual_cpk]). Disposal or recycling conditions are flagged through [scrap_reason], [scrap_date], and [retread_code] attributes. Use this table for user queries regarding tyre asset audits, predicting wear rates, tracking retreading suppliers, monitoring inventory depreciation costs, or analyzing fleet tyre failure distributions."
+},
+{
+  "table_name": "d_tm_tyremaster_movement",
+  "type": "child",
+  "description": "Tyre lifecycle movement and vehicle assignment tracking table. Use this table to audit physical tyre changes, including mount (fitment) and unmount (removal) events on fleet vehicles. It establishes a child relationship to the main tyre master database via [parent_id]. Key physical orientation columns include [vehicle_name], [fitted_as], [position_code], [axle_number], and [axle_config]. Performance indicators at both mounting and removal phases are closely monitored via tread depths ([fitment_td], [removed_td]) and vehicle odometers ([fitment_km], [removed_km]), automatically calculating total runtime lifespan via [total_km]. Inventory control and workshop job alignments are handled via [gi_entry] (Goods Issue), [gr_entry] (Goods Receipt), [issueno_jc] (Job Card Issue), and [receipt_jc] (Job Card Receipt). Use this table for user queries regarding tyre performance audits, physical vehicle installation history, tracking specific wheel positions, or investigating early removals through [reason_code] and [scrap_reason]."
+},
+{
+  "table_name": "d_tm_tyremaster_retread",
+  "type": "child",
+  "description": "Tyre retreading lifecycle and procurement tracking table. Use this table to manage and track the outsourcing of worn tyre casings to external vendors for re-treading processes, as well as the integrated ERP purchase cycles. It establishes a child relationship to the primary tyre master database via [parent_id]. Key procurement and stock transaction columns include [po_no] (Purchase Order), [grpo_no] (Goods Receipt PO), [gd_no] (Goods Issue/Delivery document pointer), [invoice_no], and item line mappings like [po_line]. Physical and product transformations are tracked via vendor definitions ([vendor_name], [venor_id]), tread structural patterns ([retread_pattern]), pre-retread statuses ([retread_code], [retread_name]), and transformed post-retread outcomes ([after_retread_code], [after_retread_name]). Financial footprints are preserved inside [service_cost] using [currency] definitions. Use this table for user queries regarding checking which tyres are currently at a retread facility, tracking external repair expenses, validating physical receipt timelines via [date_received], or auditing matching ERP financial documents."
+},
+{
+  "table_name": "d_tm_tyremaster_cost_distrib",
+  "type": "child",
+  "description": "Tyre asset expense amortization and cost distribution table. Use this table to manage and track the monthly financial depreciation or cost allocation profiles calculated for individual tyre assets over their operational lifespan. It establishes a child relationship to the primary tyre master database via [parent_id]. Key financial and integration columns include [cost] (the distributed amount for the period) and [je_no], which cross-references the matching general ledger Journal Entry document in the ERP system. Time-boundary definitions for the distribution period are controlled via [issue_date] (start of allocation), [end_date] (termination of allocation), and [doc_date] (posting record log date). Use this table for user queries regarding monthly fleet maintenance cost run-rates, auditing general ledger journal entries tied to operational tyre usage, tracking depreciation timelines, or verifying structural asset cost distributions."
+},
+{
+  "table_name": "d_tm_inspection_log",
+  "type": "child",
+  "description": "Vehicle tyre maintenance inspection header log. Use this table to track fleet vehicle routine inspections, auditing current configurations, physical tyre counts, and odometer increments. Key operational columns include [vehicle_code], [connected_vehicle_code] (e.g., paired trailers), [route_code], and [driver_name]. It captures structural vehicle configurations during the check via [no_of_tyres], [no_of_spares], and [no_of_axles]. Fleet utilization parameters are tracked via [last_odo], [current_odo], and [distance], linked directly to operational reference processes like [jobcard_id] and [ship_id]. Use this table for user queries regarding tracking scheduled tyre inspection compliance, identifying vehicle configuration mutations, auditing trip distances, or verifying which mechanic signed off on a fleet check before dispatch."
+},
+{
+  "table_name": "d_tm_inspection_log_detail",
+  "type": "child",
+  "description": "Vehicle tyre maintenance inspection fine-grained detail table. Use this table to manage and look up individual tyre conditions, wear calculations, pressure measurements, and mechanical actions recorded during a specific vehicle inspection event. It establishes a child relationship to the inspection header log via [parent_id]. Key physical and identity tracking columns include [tyre_code], [part_serial_no], [manf_serial_no], [item_name], and [position_id]. Wear and performance metrics are monitored across tread depth changes ([fitted_mm], [old_mm], [current_mm]), pressure variations ([recommended_pressure], [actual_pressure]), valve health ([missing_valve_cap]), and utilization intervals ([last_odo], [current_odo], [covered_km], [travelled_km], [total_km]). Inventory and stock status changes driven by inspections use [action], [reason], [scarp_id], [warehouse], [gi_entry], and [gr_entry]. Use this table for user queries regarding checking individual tyre wear patterns, identifying low pressure or missing valve caps, auditing tyre mileage histories, or locating the current action state of a tyre post-inspection."
+},
+{
+  "table_name": "d_wm_vehicle_return_checklist",
+  "type": "master",
+  "description": "Vehicle return and safari deployment checklist header table. Use this table to track and audit comprehensive vehicle technical inspections performed either before dispatch (pre-safari) or immediately upon return (post-safari) to evaluate component serviceability. Key operational columns include [vehicle_code], [vehicle_name], [driver_name], [trip_no], and [route_code]. It differentiates evaluation phases using [checklist_type] and anchors inspections back to administrative and scheduling entities via [ship_id] (Shipment Order) and [jobcard_id] (Workshop Maintenance Card). Use this table for user queries concerning pre-trip authorization logs, post-trip vehicle damage filtering, tracking historical transit verification checklists per asset, or identifying which technician performed an evaluation."
+}
+,
+{
+  "table_name": "d_wm_vehicle_return_checklist_detail",
+  "type": "child",
+  "description": "Vehicle return and safari inspection granular item checklist table. Use this table to manage and track the pass/fail evaluation of specific mechanical parts, safety items, or tools checked during a vehicle's pre- or post-safari inspection. It establishes a child relationship to the checklist summary header via [parent_id]. Key transactional evaluation columns include structural classification IDs like [parttype_id], [jobtype_id], and the specific item marker [checklist_item_id]. The inspection verification condition or score is recorded within [checklist_status]. Use this table for user queries concerning individual component condition histories (e.g., checking if brakes, lights, or fluids were marked 'not okay'), reading specific inspector defect notes in [remarks], or auditing line-item checklist parameters."
+},
+{
+  "table_name": "d_fm_job_card",
+  "type": "master",
+  "description": "Workshop maintenance job card header table. Use this table to manage and track vehicle service requests, mechanical or electrical repairs, breakdown interventions, and technician labor assignments. Key vehicle and asset metadata columns include [vehicle_code], [vehicle_name], [connected_vehicle_code] (e.g., linked trailers), [driver_name], and tracking serialization variables like [item_serial_no] or [internal_serial_no]. Repair schedules and workflow ownership parameters are captured via [admission_date], [completion_date], [priority], [status], and assigned personnel roles ([technician_name], [electrician], [foreman], [welder], [assignee_name]). Operational metrics include odometer tracking ([current_odometer], [last_odometer]), [engine_hours], and financial aggregations like [expense_doctotal] integrated with procurement elements like [service_po]. Use this table for user queries concerning current fleet repair backlogs, workshop productivity audits, calculating mean time to repair (MTTR), tracking vehicle breakdown incidents via [is_breakdown], or analyzing operational maintenance costs per vehicle asset."
+},
+{
+  "table_name": "d_fm_job_card_details",
+  "type": "child",
+  "description": "Workshop maintenance job card breakdown detail table. Use this table to manage and look up individual line-item repair tasks, scheduled maintenance workflows, labor tracking intervals, and diagnostic metrics linked to a parent workshop ticket. It establishes a child relationship to the job card header via [parent_id]. Key classification columns include [maintenance_name], [checklist_name], [job_name], and [part_type_name]. Work scheduling, labor resource allocation, and job execution efficiencies are monitored via [no_of_labour], [allocated_time], [actual_time], [start_date], and [end_date]. Preventative scheduling parameters use [nextservice_date] and [nextservice_km], while task-level financial billing data points utilize [for_charges], [external_price], and [currency_code]. Use this table for user queries concerning itemized workshop task audits, comparing planned vs. actual repair times, tracking component-level warranty intervals, or parsing billing indicators for customer or driver recovery charges."
+},
+{
+  "table_name": "d_fm_job_card_expense",
+  "type": "child",
+  "description": "Vehicle maintenance job card expense ledger detail table. Use this table to manage and track individual line-item financial expenditures, spare part values, and external vendor procurement costs directly tied to a specific workshop job card. It establishes a child relationship to the job card header via [parent_id]. Key transactional and ERP integration columns include [document_type], [document_entry], [draft_key], and cross-reference hooks ([base_line_id], [ref_1] through [ref_5]). Granular financial and inventory tracking variables include [expense_details], [expense_date], [quantity], [issued_quantity], [price], [amount], [currency], [vat_group], [tax_amount], and [paid_amount]. Operational sign-offs and workflow states are captured via [approved_by_manager], [approved_by_foreman], [approved_by], and [is_reject]. Use this table for user queries concerning itemized workshop material costs, evaluating parts consumption variance, checking supplier invoice match statuses via [supplier_name], or filtering out rejected expense rows during fleet maintenance cost reporting."
+},
+{
+  "table_name": "d_fm_job_card_spareparts",
+  "type": "child",
+  "description": "Workshop job card spare parts allocation, procurement, and inventory issue tracking table. Use this table to audit and reconcile the entire lifecycle of physical replacement components required during a vehicle service task. It establishes a child relationship to the job card header via [parent_id]. Key inventory and procurement tracking columns map quantities across states, including planned requests ([quantity]), stock issues ([issued_quantity]), and supplier purchase deliveries ([receipt_quantity]) against baseline inventory levels ([onhand]). Financial metrics look up historical and active costs via [last_pur_price], [price], [amount], [tax_amount], and external rates ([external_price]). Regulatory and workflow gatekeeping parameters are controlled via management authorizations ([approved_by_manager], [approved_by_foreman], [is_reject]), core component attributes ([item_code], [item_name]), core scrap tracking ([require_old_items_receipt], [old_items_receipt_date]), and warranty claim identifiers ([is_under_warranty], [warranty_expirydate], [warranty_claim_initiated]). Use this table for user queries concerning itemized garage parts consumption, checking out-of-stock items bought specifically for a repair, auditing old parts returns for salvage compliance, or filtering billable maintenance lines via [chargeable] and [for_charges]."
+},
+
+{
+  "table_name": "m_tyre_size",
+  "type": "master",
+  "description": "Tyre size master data table. Use this table as a central registry to manage, validate, and reference standardized tyre dimensions across the fleet system. It stores unique technical profiles, matching specific industry nomenclature (such as [tyre_size_code] like '12R22.5' or '315/80R22.5') with their corresponding system identifiers. The record-level operational state, active availability, and auditing metadata are tracked via system validation timestamps and [status] flags (e.g., 'Y'). Use this table for user queries concerning the identification of valid tyre dimensions, auditing master configurations, or mapping standardized tyre sizes to inventory and vehicle wheel specifications."
+}
+,
+{
+  "table_name": "d_fm_job_card_routine_services",
+  "type": "child",
+  "description": "Workshop job card scheduled and routine service checklist line table. Use this table to manage and look up cyclical preventative maintenance activities (such as oil changes, filter swaps, and scheduled checkups) assigned under a parent workshop job card. It establishes a child relationship to the main job card table via [parent_id]. Key service tracking columns include [service_type_name] and [job_type_name]. Resource planning and execution time slices are tracked via [no_of_labour], [technician_name], [allocated_time], [start_date], [end_date], and [actual_time]. Future preventative fleet schedules are driven by interval offsets inside [nextservice_date] and [nextservice_km], while mileage baselines use [current_odometer] and [actual_odometer] alongside [odometer_uom]. Use this table for user queries concerning routine fleet service completion rates, checking mechanic labor utilization metrics, or auditing future preventative maintenance forecast thresholds per vehicle."
+},
+{
+  "table_name": "d_wm_mechanic_performance_kpi",
+  "type": "master",
+  "description": "Workshop technician performance evaluations and Key Performance Indicator (KPI) tracking table. Use this table to manage and track individual mechanic work quality ratings, efficiency scoring, and audit parameters mapped directly to completed maintenance tasks. Key resource and target tracking columns include [mechanic_name], [job_id] (referencing the completed repair task or job card line), [truck_no], and [trailer_no]. Productivity profiles and audit results are mathematically captured via performance grading metrics like [max_points], [actual_points], and quality markers ([feed_back], [status]). Use this table for user queries concerning mechanic labor evaluation summaries, identifying technician performance bonuses, monitoring individual turnaround scores, or auditing repair callback logs based on quality score variations."
+},
+{
+  "table_name": "d_wm_mechanic_performance_kpi_detail",
+  "type": "child",
+  "description": "Workshop technician performance indicator fine-grained detail matrix table. Use this table to manage and track itemized scoring components, structural evaluation criteria, and specific metrics (e.g., safety compliance, turnaround speed, diagnostic accuracy) that comprise a mechanic's overall performance assessment. It establishes a child relationship to the primary KPI summary log header via [parent_id]. Metric classification and auditing variables are mapped using [kpi_group_id], [kpi_type_id], and [kpi_name]. Individual row performance grading metrics are mathematically tracked via [max_points] and [actual_points]. Use this table for user queries regarding checking a technician's breakdown score across different work categories, analyzing individual point deductions, or auditing line-item evaluator feedback inside [remarks]."
+},
+{
+  "table_name": "d_fm_transport_load_requisition",
+  "type": "master",
+  "description": "Transport load requisition and trip capacity planning queue table. Use this table to manage and track active vehicle requirements, outbound capacity allocations, and return shipment scheduling pools before a formal shipment order is committed. Rows function as a transient planning buffer; entries are populated when evaluating vehicle placement for upcoming routes and are structurally cleared or transitioned once an outbound shipment order is generated. Key log variables include shipment links ([return_ship_id], [target_ship_id]), equipment metrics ([vehicle_name], [size], [container_no], [capacity], [Weight]), route metadata ([route_code], [loading_site]), commercial parameters ([customer_name], [commodity], [order_amount]), and timeline thresholds ([available_date], [expected_load_date]). Use this table for user queries regarding checking available vehicles awaiting allocation, tracking pending backhaul capacities, or auditing upcoming trip planning pipelines."
+},
+{
+  "table_name": "[analytics].[vw_customer_profitability]",
+  "type": "master",
+  "description": "This analytics view compiles customer profitability performance data per trip. It tracks trip dates, trip categories, customer references, route identities, physical load weights, travel durations, pricing structures, total generated amounts, and explicit operational costs normalized to USD. Use this view directly for profit calculation summaries and client financial audits without requiring manual cross-table group by joins."
+},
+{
+  "table_name": "[analytics].[vw_fuel_consumption]",
+  "type": "master",
+  "description": "This analytics view aggregates and tracks vehicle fuel ingestion events, pricing metrics, and total localized transactional amounts against the vehicle's structural fuel tank capacity limitations. Use this view directly for fleet fuel efficiency analysis, refuel auditing, and consumption trend reporting." 
+},
+{
+  "table_name": "[analytics].[vw_mis_forecasting_targets]",
+  "type": "master",
+  "description": "This management information systems (MIS) analytics view stores target metrics and historical forecasting benchmarks grouped by month and year. It monitors cargo targets (TEU containers and breakbulk tons), fuel thresholds (liters and average efficiency ratios), and travel baselines (daily kilometer targets versus last year's benchmarks). Use this view directly for executive dashboard forecasting, KPI variance analysis, and operational goal setting."
+},
+{
+  "table_name": "[analytics].[vw_outstanding_pod_billing]",
+  "type": "master",
+  "description": "This analytical view tracks the completion status of the delivery lifecycle, focusing specifically on outstanding Proof of Delivery (POD) submissions, verification dates, and pending billing or invoicing milestones per trip. Use this view directly for operational audit reporting, tracking revenue leakages, and monitoring cash-cycle bottlenecks."
+},
+{
+  "table_name": "[analytics].[vw_revenue_perkm_costdetails]",
+  "type": "master",
+  "description": "This analytical view provides a highly granular breakdown of operational expenditures categorized per trip, detailing normalized system costs alongside localized transactional currencies. Use this view directly to evaluate cost-per-kilometer metrics, analyze multi-categorical trip expenses, and feed optimization engines." 
+},
+{
+  "table_name": "[analytics].[vw_revenue_perkm_profitability]",
+  "type": "master",
+  "description": "This analytical view provides comprehensive revenue-per-kilometer and profitability details per trip. It maps out geographic constraints (origin, destination, region), asset specifics (truck types, capacities, fuel ratios), and dual-currency financial fields (USD vs Local currencies for expenses and revenues). Use this view directly for region-based margin reporting and asset utilization analytics."
+},
+{
+  "table_name": "[analytics].[vw_Revenue_syscurrency]",
+  "type": "master",
+  "description": "This analytical view provides normalized top-line revenue calculations per sub-trip, translating local accounting documentation values directly into the unified system currency (DocTotal). Use this view for high-level consolidated financial tracking and multi-leg route performance analysis."
+},
+{
+  "table_name": "[analytics].[vw_Revenue_syslocal]",
+  "type": "master",
+  "description": "This analytical view provides segment-level top-line revenue calculations per sub-trip, preserving the exact financial totals in the localized baseline transaction currency (DocTotal). Use this view for region-specific accounting reconciliation, local tax auditing, and branch performance evaluation."
+},
+{
+  "table_name": "[analytics].[vw_routeanalysis]",
+  "type": "master",
+  "description": "This analytical view provides operational performance metrics consolidated at the route level per trip. It tracks route paths, total transit days, kilometer metrics, pricing indices, and base expenses normalized to USD. Use this view directly for lane profitability auditing, transport efficiency mapping, and logistics route optimization modeling."
+},
+{
+  "table_name": "[analytics].[vw_shipment_orders]",
+  "type": "master",
+  "description": "This core analytics view acts as a consolidated shipment ledger tracking deep cross-border logistics timelines, customs checkpoints, route details, fleet assignment keys, client accounting entries, and freight descriptions. Use this view directly for comprehensive asset movement auditing, trip tracking lifecycle summaries, and master transport metric generation."
+},
+{
+  "table_name": "[analytics].[vw_tripanalysis]",
+  "type": "master",
+  "description": "This analytical view provides operational and financial KPIs consolidated per distinct trip instance. It indexes essential lane metadata, asset assignments, volumetric gross cargo weights, distance tracking benchmarks, total revenue captured, and converted cost metrics normalized to USD. Use this view directly for operational performance scoring, fleet efficiency monitoring, and gross margin audits."
+},
+{
+  "table_name": "[analytics].[vw_TripExpenseLocal]",
+  "type": "master",
+  "description": "This analytical view details segment-level trip operational expenditures calculated per sub-trip, preserving the baseline financial totals directly within the localized transaction currency scale (LocalDocTotal). Use this view for region-specific cost controls, field expense auditing, and backhaul lane efficiency calculations."
+},
+{
+  "table_name": "[analytics].[vw_TripExpenseUSD]",
+  "type": "master",
+  "description": "This analytical view details segment-level trip operational expenditures calculated per sub-trip, normalizing all baseline financial totals into standard system USD currency rules (DocTotal). Use this view for cross-border financial reconciliation, consolidated margin optimization, and global fleet overhead auditing."
+},
+{
+  "table_name": "[analytics].[vw_truck_capacity_utilization]",
+  "type": "master",
+  "description": "This analytical view assesses fleet space efficiency and volumetric truck capacity utilization profiles. It links physical asset registration keys to operational load dates, specialized vehicle groups, route markers, and consolidated financial performance totals. Use this view directly for deadhead lane mitigation, weight-to-volume ratio audits, and fleet supply-chain performance reviews."
+},
+{
+  "table_name": "[analytics].[vw_truck_transit_days]",
+  "type": "master",
+  "description": "This analytical view tracks logistical turnaround and transit time frames per trip. It measures the duration between the physical cargo loading date and the asset's eventual yard check-in date. Use this view directly for fleet downtime analysis, transit SLA auditing, and logistics terminal efficiency tracking."
+},
+{
+  "table_name": "[analytics].[vw_vehicle_trip_odohistory]",
+  "type": "master",
+  "description": "This analytical view historicalizes odometer reading metrics per vehicle or trip segment. It logs opening and closing values alongside total calculated kilometers to verify distance intervals. Use this view directly for vehicle utilization audits, automated maintenance trigger alerts, and fuel consumption validation models."
+},
+{
+  "table_name": "[analytics].[vw_vehicles]",
+  "type": "master",
+  "description": "This analytical view functions as a core dimension catalog for the active transport fleet. It maps unique asset tracking IDs and state registration numbers to primary owner data and structural fuel holding capacities. Use this view directly for master vehicle cross-referencing, owner-operator breakdown reporting, and asset capacity validation."
+},
+{
+  "table_name": "d_cf_filemaster",
+  "type": "master",
+  "description": "This central master table serves as the primary log and tracking repository for shipping, logistics, and customs clearance files. It records operational details including document tracking numbers, dimension specifications, client and supplier info, shipping dates (ETA, ATA), permit requirements, and cargo financial values to facilitate thorough supply chain auditing and customs lifecycle management."
+},
+{
+  "table_name": "d_cf_filemaster_bol_details",
+  "type": "master",
+  "description": "This child operational table stores itemized Bill of Lading (BOL) and container breakdown details mapped to the primary file master records. It maintains specific container numbers, distinct BOL assignments, unique shipper/consignee entities, and historical validity windows for granular logistics line-item tracking."
+},
+{
+  "table_name": "d_cf_filemaster_billinginformation",
+  "type": "master",
+  "description": "This child operational table manages transactional billing and expense assignment records mapped to the primary file master records. It tracks unique customer profiles, specialized expense account IDs, specific client codes, and system temporal history parameters for granular financial auditing and cargo cost allocation."
+},
+{
+  "table_name": "d_cf_filemaster_charges",
+  "type": "master",
+  "description": "This child operational table captures itemized logistical expenses, duties, and financial charges mapped to primary file master records. It records detailed currency exchange rates, calculated totals, transit asset associations (trucks/trailers), approval workflow flags, and delay logging for granular line-item cost accounting and operational auditing."
+},
+{
+  "table_name": "d_cf_filemaster_containerdetails",
+  "type": "master",
+  "description": "This sub-operational table tracks granular container-level data mapped directly to primary file master items. It records physical dimensions, multiple seal types, weight metrics, custom bonds, transport asset tracking configurations (truck, multiple trailers, drivers), and logistical timestamps to support deep container fleet lifecycle tracking and compliance monitoring."
+},
+{
+  "table_name": "d_cf_filemaster_customer_charges",
+  "type": "master",
+  "description": "This child operational table tracks client-facing financial entries, sales rates, and billing charges linked directly to primary file master items. It documents multi-dimensional reporting classifications, currency conversions, reimbursable flags, asset associations, and system approval timelines to facilitate granular customer invoicing and freight auditing."
+},
+{
+    "table_name": "d_cfs_booking",
+    "type": "user table",
+    "description": "It is a CFS booking table which contains all details regarding booking, logistics, document statuses, customs processing, and container tracking. Use this table to check operational booking details such as customer and consignee information, vessel and voyage details, bill of lading counts, 20ft and 40ft container quantities, financial/duty values (cargo, insurance, freight value), and various regulatory clearance flags (customs, permits, exemptions)."
+},
+{
+    "table_name": "d_cfs_booking_cargo_details",
+    "type": "user table",
+    "description": "It is a CFS booking cargo details table which contains line-item details about cargo, container specifications, dimension measurements, seals, equipment ownership, and transport equipment tracking linked to main CFS bookings. Use this table to check individual container numbers, seal numbers (customs, site, standard), container sizes and types, weight/volume measurements, hazardous goods classifications, gate pass timings, assigned vehicles/drivers, and item pricing details."
+},
+{
+    "table_name": "d_cfs_booking_customer_charges",
+    "type": "user table",
+    "description": "It is a CFS booking customer charges table which contains detailed line-item information regarding commercial charges, fee billings, reimbursable expenses, float account processing, and tax assessments applied directly to customers for CFS bookings. Use this table to check customer-billed line items, unit pricing, calculated and total charge amounts, tax breakdowns, approval statuses, and flags for reimbursable or float-funded transactions."
+},
+{
+    "table_name": "d_cfs_booking_expenses",
+    "type": "user table",
+    "description": "It is a CFS booking expenses table which contains line-item details about financial expenses, duties, taxes, payment modes, approval statuses, and cost allocations linked to main CFS bookings. Use this table to check operational expense details such as expense types and names, currency exchange rates, calculated and total amounts, tax codes, approval workflows, payment modes, and assigned customers or routes."
+},
+{
+    "table_name": "d_cfs_booking_part_container",
+    "type": "user table",
+    "description": "It is a CFS booking part container table which contains details regarding partial or shared container (LCL/groupage) allocations linked to main CFS bookings. Use this table to check sub-consignments within shared containers, specific bills of lading, individual consignee and shipper details, addresses, and operational remarks for part-load container shipments."
+},
+{
+    "table_name": "d_cfs_booking_attachment",
+    "type": "user table",
+    "description": "It is a CFS booking attachment table which contains file metadata, uploaded document references, supplier invoices, file storage locations, and binary templates linked to main CFS bookings. Use this table to check attached operational documents such as uploaded file names, file extensions, MIME types, CDN URLs, attachment dates, document requirements, and associated user IDs."
+},
+{
+    "table_name": "d_cfs_gatepass",
+    "type": "user table",
+    "description": "It is a CFS gatepass table which contains entry/exit gate pass records for vehicles, drivers, trailers, containers, and associated cargo at the CFS terminal. Use this table to check gate pass documentation details, driver license numbers, vehicle/trailer assignments, container numbers (up to 3 per pass), container seal numbers and conditions, weight measurements, port/ICD locations, and links to booking master records."
+},
+{
+    "table_name": "d_cfs_receipt",
+    "type": "user table",
+    "description": "It is a CFS receipt table which contains master records for cargo intake, warehouse receiving operations, de-stuffing/stripping activities, and customer rental returns at the CFS terminal. Use this table to check operational receipt numbers, associated file references, customer and consignee details, operational processing windows (start/end times), receiving status flags, and operator IDs."
+},
+{
+    "table_name": "d_cfs_receipt_details",
+    "type": "user table",
+    "description": "It is a CFS receipt details table which contains line-item information on cargo intake, container tracking, inventory quantities, warehouse bin storage, and de-stuffing/stripping status linked to CFS receipts. Use this table to check line-item cargo descriptions, quantities (delivered, adjusted, stuffed, repacked, balance, stripping), gross/tare/net weights, assigned warehouse bins, transport details (truck/trailer/driver), and container release statuses."
+},
+{
+    "table_name": "d_cfs_receipt_attachment",
+    "type": "user table",
+    "description": "It is a CFS receipt attachment table which contains file metadata, uploaded document references, binary templates, and cloud storage CDN links associated with CFS receipt records. Use this table to check supporting documents uploaded during cargo intake and receiving, such as document types, file names, file extensions, attachment dates, MIME types, CDN URLs, and associated user IDs."
+},
+{
+    "table_name": "d_cfs_stripping",
+    "type": "user table",
+    "description": "It is a CFS stripping table which contains master records for container un-stuffing/stripping operations at the CFS terminal. Use this table to check operational stripping job orders, container numbers being stripped, seal numbers, start and end timestamps of stripping activities, yard location positioning, total lot numbers, and links to master booking files."
+},
+{
+    "table_name": "d_cfs_stripping_details",
+    "type": "user table",
+    "description": "It is a CFS stripping details table which contains line-item details on un-stuffing/stripping operations, item-level cargo breakdowns, inventory balance quantities, lot/bundle numbers, warehouse location assignments, and approval workflows linked to main stripping jobs. Use this table to check line-item cargo descriptions, quantities (stripped, stuffed, adjusted, balance, pack, inventory), weights, warehouse bin allocations, approval statuses, and assigned operators or verifiers."
+},
+{
+    "table_name": "d_cfs_stripping_attachment",
+    "type": "user table",
+    "description": "It is a CFS stripping attachment table which contains file metadata, uploaded document references, binary templates, and cloud storage CDN links associated with CFS stripping/un-stuffing job records. Use this table to check supporting documents uploaded during container stripping operations, such as document types, file names, file extensions, attachment dates, MIME types, CDN URLs, and associated user IDs."
+},
+{
+    "table_name": "d_cfs_stuffing",
+    "type": "user table",
+    "description": "It is a CFS stuffing table which contains master records for cargo loading/stuffing operations into containers at the CFS terminal. Use this table to check operational stuffing job orders, container numbers being stuffed, seal numbers applied, start and end timestamps, yard/warehouse location assignments, aggregate stuffed quantities and weights, and links to CFS booking records."
+},
+{
+    "table_name": "d_cfs_stuffing_details",
+    "type": "user table",
+    "description": "It is a CFS stuffing details table which contains line-item details on cargo loading/stuffing operations into containers, item breakdowns, stuffed quantities and weights, lot/bundle numbers, warehouse bin sources, and verification workflows linked to main stuffing jobs. Use this table to check individual item descriptions, stuffed/stripped/balance quantities, unit and total weights, warehouse allocations, approval statuses, and assigned operators or verifiers."
+},
+{
+    "table_name": "d_cfs_stuffing_attachment",
+    "type": "user table",
+    "description": "It is a CFS stuffing attachment table which contains file metadata, uploaded document references, binary templates, and cloud storage CDN links associated with CFS stuffing/loading job records. Use this table to check supporting documents uploaded during container stuffing operations, such as document types, file names, file extensions, attachment dates, MIME types, CDN URLs, and associated user IDs."
+},
+{
+    "table_name": "d_cfs_delivery",
+    "type": "user table",
+    "description": "It is a CFS delivery table which contains master records for outbound cargo and container dispatch/delivery operations at the CFS terminal. Use this table to check delivery document headers, delivery status, associated stuffing operations, container collection/rental return flags, transport details (truck, trailer, driver, transporter), and links to booking and gate pass records."
+},
+{
+    "table_name": "d_cfs_delivery_details",
+    "type": "user table",
+    "description": "It is a CFS delivery details table which contains line-item details on outbound cargo dispatch, item breakdowns, quantities, volumetric and weight dimensions, warehouse bin source locations, space freed metrics, and transport vehicle details linked to CFS delivery orders. Use this table to check line-item cargo descriptions, dispatched/on-hand/loose quantities, item dimensions (length, width, height, volume, weight), warehouse codes/bins, dangerous goods classifications, transport details, and freed warehouse space calculations."
+},
+{
+    "table_name": "d_cfs_delivery_attachment",
+    "type": "user table",
+    "description": "It is a CFS delivery attachment table which contains file metadata, uploaded document references, binary templates, and cloud storage CDN links associated with CFS outbound delivery records. Use this table to check supporting documents uploaded during cargo delivery operations, such as document types, file names, file extensions, attachment dates, MIME types, CDN URLs, and associated user IDs."
+},
+{
+    "table_name": "d_cfs_stock_packing",
+    "type": "user table",
+    "description": "It is a CFS stock packing table which contains master records for cargo packing and repacking operations conducted within the CFS terminal warehouse. Use this table to check stock packing document headers, operational packing execution time windows (start/end times), reference tracking codes, and record audit timestamps."
+},
+{
+    "table_name": "d_cfs_stock_packing_detail",
+    "type": "user table",
+    "description": "It is a CFS stock packing detail table which contains line-item records for cargo packing and repacking activities within the terminal warehouse. Use this table to check item-level repacking details, packed quantities, gross weights, repacking costs, approval statuses, source and target warehouse bins, serial/lot numbers, and assigned personnel (counters, verifiers, approvers)."
+},
+{
+    "table_name": "d_cfs_stock_packing_attachment",
+    "type": "user table",
+    "description": "It is a CFS stock packing attachment table which contains file metadata, uploaded document references, binary templates, and cloud storage CDN links associated with CFS cargo packing and repacking records. Use this table to check supporting documents uploaded during packing and repacking operations, such as document types, file names, file extensions, attachment dates, MIME types, CDN URLs, and associated user IDs."
+},
+{
+    "table_name": "d_cfs_repacking",
+    "type": "user table",
+    "description": "It is a CFS repacking table which contains master transaction records for repacking operations conducted on stock and cargo items at the CFS terminal. Use this table to check repacking document headers, associated item details, quantities and weights, serial/bundle/lot numbers, repacking prices and currencies, source warehouse assignments, and links to booking files."
+},
+{
+    "table_name": "d_cfs_adjustment",
+    "type": "user table",
+    "description": "It is a CFS adjustment table which contains header records for inventory stock adjustments and stock count reconciliations at the CFS terminal warehouse. Use this table to check adjustment document headers, stock counting execution dates, external references, supplier names, and system record creation/update audit timestamps."
+},
+{
+    "table_name": "d_cf_eta_tracking",
+    "type": "user table",
+    "description": "It is a CFS ETA tracking table which contains estimated and actual vessel, flight, transshipment, border clearance, and inland transport milestone tracking data for cargo shipments. Use this table to check shipment milestone dates (ETA, ATA, ETD, ATD, discharge, berth, handover), vessel/carrier/voyage details, border clearance timestamps, transport equipment (trucks, trailers), transshipment route legs, and consignee receipt status."
+},
+{
+    "table_name": "d_cf_container_clearing",
+    "type": "user table",
+    "description": "It is a container clearing table which contains tracking metadata for ocean container clearance, Delivery Order (DO) processing milestones, container security deposit payments, and demurrage/storage delay justifications. Use this table to check DO lodging/receipt dates, container deposit status and amounts, demurrage/storage days incurred alongside delay reasons, movement completion flags, and links to booking files."
+},
+{
+    "table_name": "d_cf_storing_order",
+    "type": "user table",
+    "description": "It is a storing order table which contains tracking metadata for warehouse storing orders, container offloading events, inward/outward interchange receipts, demurrage fee calculations/invoicing, and container deposit refund processing. Use this table to check storing order timelines, container offloading/interchange dates, demurrage invoice amounts and payment dates, deposit refund submissions/payouts, and links to master booking records."
+},
+{
+    "table_name": "d_cf_file_movement",
+    "type": "user table",
+    "description": "It is a freight file movement and tracking table which contains comprehensive operational milestones, customs declaration/clearance details, duties/tax calculations, vessel/voyage logistics, and status progress for CFS import/export freight files. Use this table to check shipping milestones (ETA, ATA, discharge, delivery), customs processing (T1, C11, C12, bonds, assessment numbers), duty and tax financial breakdown (FOB, freight, insurance, VAT, import duty), and operational completion flags."
+},
+{
+    "table_name": "d_cf_sub_t1_bond",
+    "type": "user table",
+    "description": "It is a sub-T1 customs bond table which contains line-item associations between T1 customs transit document numbers and individual Bills of Lading (B/L) within CFS freight files. Use this table to check sub-file level T1 transit document allocations, associated Bill of Lading references, document series numbers, and audit creation/update metadata."
+},
+{
+    "table_name": "d_cf_sub_t1_bond_details",
+    "type": "user table",
+    "description": "It is a sub-T1 customs bond details table which contains container-level itemized breakdown records linked to master sub-T1 bonds. Use this table to check individual container numbers covered by a sub-T1 bond, sub-T1 document numbers and dates, bond financial amounts, and refund deduction processing dates."
+},
+{
+    "table_name": "d_cf_bond_refund",
+    "type": "user table",
+    "description": "It is a bond refund tracking table which contains transactional details regarding customs bond refunds issued for CFS freight files. Use this table to check refund dates, refund amounts, associated T1 and sub-T1 transit numbers, container numbers, completion status, and audit metadata."
+}
+
+
+]
+}
