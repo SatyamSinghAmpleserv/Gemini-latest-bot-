@@ -1,0 +1,13 @@
+fastapi
+sentence-transformers
+langchain
+langchain-classic
+langchain-huggingface
+langchain-community
+langchain-google-genai
+uvicorn
+pandas
+pyodbc
+jwt
+
+
