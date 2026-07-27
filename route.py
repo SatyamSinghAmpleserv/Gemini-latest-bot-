@@ -42,7 +42,7 @@ app.add_middleware(
 
 
 
-
+GEMINI_API_KEY = ""  # Key should not be hardcoded for security reasons
 
 
 def get_numeric_columns(rows):
@@ -286,6 +286,9 @@ async def process_query(
                     data = json.loads(raw_data)
                 else:
                     data = raw_data
+                    
+                if data is None:
+                    data = []
 
             # data = json.loads(response.get("db_result", {}).get("data", []))
             # data = json.loads(response.get("db_result", {}))

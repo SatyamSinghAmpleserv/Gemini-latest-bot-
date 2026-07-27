@@ -44,7 +44,7 @@ table_embedding_model = HuggingFaceEmbeddings(model_name="BAAI/bge-large-en-v1.5
 
 
 table_vector_store = FAISS.load_local(
-            r"C:\Users\nitish.jha\Desktop\Gemini_chatbot\table_faiss_index",
+            str(BASE_DIR / "table_faiss_index"),
             table_embedding_model,
             allow_dangerous_deserialization=True
         )
@@ -517,7 +517,7 @@ class GeminiChatBot:
     )
         # question = state["messages"][-1].content 
         print(question)
-        table_retrieval = TableRetrieval( query=question, table_vector_store=table_vector_store, schema_file=r"C:\Users\nitish.jha\Desktop\Gemini_chatbot\table_schema.txt" ) 
+        table_retrieval = TableRetrieval( query=question, table_vector_store=table_vector_store, schema_file=str(BASE_DIR / "table_schema.txt") ) 
         selected_tables = table_retrieval.selected_table() 
         print('selected_tables done!')
         return { "schema_context": selected_tables }
@@ -607,7 +607,14 @@ Only return the JSON. Do not include explanations.
         print("-"*100)
         print(response)
         print("-"*100)
-        result = json.loads(response.content[0]['text'])
+        text_content = response.content[0]['text'].strip()
+        if text_content.startswith("```json"):
+            text_content = text_content[7:]
+        elif text_content.startswith("```"):
+            text_content = text_content[3:]
+        if text_content.endswith("```"):
+            text_content = text_content[:-3]
+        result = json.loads(text_content.strip())
         # print(response)
         # return {
         #     "messages": [response]
@@ -717,9 +724,14 @@ Output format:
 """
         response = await self.llm.ainvoke(prompt)
 
-        fixed = json.loads(
-    response.content
-)
+        text_content = response.content.strip()
+        if text_content.startswith("```json"):
+            text_content = text_content[7:]
+        elif text_content.startswith("```"):
+            text_content = text_content[3:]
+        if text_content.endswith("```"):
+            text_content = text_content[:-3]
+        fixed = json.loads(text_content.strip())
         return {
     "SQL": fixed["SQL"],
     "retry_count": state["retry_count"] + 1

@@ -8,6 +8,9 @@ langchain-google-genai
 uvicorn
 pandas
 pyodbc
-jwt
-
-
+PyJWT
+faiss-cpu
+python-dotenv
+requests
+langgraph
+openpyxl
