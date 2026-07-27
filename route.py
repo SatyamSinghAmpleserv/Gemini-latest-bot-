@@ -15,6 +15,7 @@ import shutil
 import requests 
 import json
 import jwt
+import os
 import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
@@ -42,7 +43,7 @@ app.add_middleware(
 
 
 
-GEMINI_API_KEY = ""  # Key should not be hardcoded for security reasons
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 
 def get_numeric_columns(rows):

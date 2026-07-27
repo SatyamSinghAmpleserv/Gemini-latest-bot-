@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: gemini-latest-bot
+    env: python
+    buildCommand: "pip install -r requirement.txt"
+    startCommand: "uvicorn route:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DOMAIN_URL
+        value: https://ai.dcctz.com/aivachat
+      - key: DELETE_EXCEL_FILES
+        value: https://ai.dcctz.com/aivachatbot/destroy/excel-files
+      - key: EXPORT_DIR
+        value: exports
+      - key: CHART_DIR
+        value: charts
+      - key: GEMINI_API_KEY
+        sync: false # You will enter this secret value manually in the Render Dashboard
