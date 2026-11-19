@@ -36,9 +36,11 @@ origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r".*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 
@@ -175,27 +177,48 @@ async def process_query(
     request: ChatRequest
 ):
     api_tkn = request.api_token
-    print(jwt.decode(request.api_token, options={"verify_signature":False}, algorithms=["HS256"]))
-    db_json = jwt.decode(request.api_token, options={"verify_signature":False}, algorithms=["HS256"])
-    db_name = db_json['dbname']
-    
+    try:
+        db_json = jwt.decode(request.api_token, options={"verify_signature": False}, algorithms=["HS256"])
+        db_name = db_json.get('dbname', '')
+    except Exception as e:
+        print(f"Error decoding JWT token: {e}")
+        db_json = {}
+        db_name = ""
+
+    api_key = None
+    domain_url = os.getenv("DOMAIN_URL", "https://ai.dcctz.com/aivachat")
+
     # Payload for token verification
-    api_key_payload = {
-"columns": ["DBName", "SubDomain", "aiva_api_key", "BLApiUrl"], 
-"conditions": [ { "column": "DBName", "operator": "=", "value": db_name } ]
-}
-    api_key_data = requests.post(api_key_url,json=api_key_payload)
-    print(api_key_data.json()['data'][0])
-    api_key = api_key_data.json()['data'][0]['aiva_api_key'] # Got the actua API token
-    domain_url = api_key_data.json()['data'][0]["BLApiUrl"]
-    # return api_key
+    if db_name:
+        try:
+            api_key_payload = {
+                "columns": ["DBName", "SubDomain", "aiva_api_key", "BLApiUrl"], 
+                "conditions": [ { "column": "DBName", "operator": "=", "value": db_name } ]
+            }
+            api_key_data = requests.post(api_key_url, json=api_key_payload, timeout=10)
+            data_records = api_key_data.json().get('data', [])
+            if data_records and len(data_records) > 0:
+                print(data_records[0])
+                api_key = data_records[0].get('aiva_api_key')
+                domain_url = data_records[0].get("BLApiUrl", domain_url)
+        except Exception as e:
+            print(f"Error fetching dynamic key data: {e}")
+
+    # Fallback to environment GEMINI_API_KEY if dynamic key wasn't found
+    if not api_key:
+        api_key = GEMINI_API_KEY
+        print(f"Using fallback GEMINI_API_KEY for db_name: {db_name}")
 
     try:
-            query = request.question
+        query = request.question
+        if request.domain_name.startswith("http://") or request.domain_name.startswith("https://"):
+            user_domain_name = f"{request.domain_name.rstrip('/')}/helpdesk/public"
+        elif "." in request.domain_name:
+            user_domain_name = f"https://{request.domain_name}/helpdesk/public"
+        else:
             user_domain_name = f"https://{request.domain_name}.dcclogsuite.com/helpdesk/public"
-            # user_domain_name = domain_name
-            print(f"Received Query: {query}")
-            print(user_domain_name)
+        print(f"Received Query: {query}")
+        print(user_domain_name)
     except Exception as e:
         return f"Error related to getting 'user question' and 'domain url'. The error is {e}."
     print('Question and domain URL received successfully.')
